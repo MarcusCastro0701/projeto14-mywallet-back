@@ -11,6 +11,7 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
+
 //Schemas
 
 const userSchema = joi.object({
@@ -68,6 +69,7 @@ app.post("/sign-up", async (req, res) => {
 app.post("/login", async (req, res) => {
 
     const { email, password } = req.body;
+    const token = uuidV4();
 
     try {
         const userExistente = await usersCollection.findOne({email: email});
@@ -80,7 +82,12 @@ app.post("/login", async (req, res) => {
             res.sendStatus(401)
         }
 
-        res.send(`Olá ${userExistente.name}, seja bem vindo(a)!`)
+        await db.collection("sessions").insertOne({
+            token,
+            userId: userExistente._id
+        })
+
+        res.send({ token })
 
     } catch (err) {
         console.log(err, "erro no try/catch /login ")
