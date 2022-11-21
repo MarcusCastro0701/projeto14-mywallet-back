@@ -3,9 +3,14 @@ import cors from "cors";
 import joi from "joi";
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
+
+//Routers
 import sessionRouters from './routes/sessionRoutes.js'
 import walletRouters from './routes/walletRoutes.js'
 import userRouters from './routes/userRoutes.js'
+//
+
+
 
 
 //Configs app
@@ -36,10 +41,6 @@ export const valorSchema = joi.object({
     bool: joi.required().valid(true, false)
 })
 //
-
-
-
-
 
 
 
