@@ -47,7 +47,17 @@ const sessionsCollection = db.collection("sessions");
 //
 
 
-app.post("/sign-up", async (req, res) => {
+app.post("/sign-up", postSignup);
+
+app.post("/login", postLogin);  
+
+app.post("/valor", postValor);
+
+app.get("/wallet", getWallet);
+
+app.delete("/sair", deleteSair);
+
+async function postSignup (req, res) {
 
     const user = req.body;
     
@@ -86,9 +96,9 @@ app.post("/sign-up", async (req, res) => {
 
 
 
-})
+}
 
-app.post("/login", async (req, res) => {
+async function postLogin (req, res) {
 
     const { email, password } = req.body;
     const token = uuidV4();
@@ -128,9 +138,9 @@ app.post("/login", async (req, res) => {
         res.sendStatus(500);
         return;
     }
-});  
+}
 
-app.post("/valor", async (req, res) =>{
+async function postValor (req, res) {
 
     let arrValores = [];
 
@@ -203,9 +213,9 @@ app.post("/valor", async (req, res) =>{
 
 
 
-})
+}
 
-app.get("/wallet", async (req, res) => {
+async function getWallet (req, res) {
 
     const { authorization } = req.headers; //Bearer Token
 
@@ -229,9 +239,9 @@ app.get("/wallet", async (req, res) => {
 
     
 
-})
+}
 
-app.delete("/sair", async(req, res)=> {
+async function deleteSair(req, res) {
 
     const { authorization } = req.headers; //Bearer Token
 
@@ -253,7 +263,14 @@ app.delete("/sair", async(req, res)=> {
         res.send("HOUVE ERRO AO SAIR DA SESSÃO").status(500);
         return;
     }
-});
+}
+
+
+
+
+
+
+
 
 
 // ROTAS:
