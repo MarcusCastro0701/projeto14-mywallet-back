@@ -92,11 +92,18 @@ app.post("/login", async (req, res) => {
 
     const { email, password } = req.body;
     const token = uuidV4();
-    console.log(email, password, "email e password vindos do body")
+    
+    
     try {
         const userExistente = await usersCollection.findOne({email: email});
         if(!userExistente){
             res.sendStatus(404);
+            return;
+        }
+
+        const logado = await sessionsCollection.findOne({userId: userExistente._id});
+        if(logado !== null){
+            res.sendStatus(401);
             return;
         }
 
@@ -110,6 +117,8 @@ app.post("/login", async (req, res) => {
             token,
             userId: userExistente._id,
         })
+
+        
 
         res.send([{ token: token, name: userExistente.name }])
         return;
