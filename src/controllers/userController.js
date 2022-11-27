@@ -1,5 +1,5 @@
 import { userSchema } from "../index.js";
-import { usersCollection, sessionsCollection } from "../database/db.js";
+import { usersCollection } from "../database/db.js";
 import bcrypt from "bcrypt";
 
 
@@ -9,13 +9,6 @@ export async function postSignup (req, res) {
 
     const user = req.body;
     
-    
-    const { error } = userSchema.validate(user, {abortEarly: false});
-    if (error){
-        const errors = error.details.map((details) => details.message);
-        console.log(errors);
-        res.status(400).send(errors)
-    }
 
     const emailExistente = await usersCollection.findOne({email: user.email});
         if(emailExistente){

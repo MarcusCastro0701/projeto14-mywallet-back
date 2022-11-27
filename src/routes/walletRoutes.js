@@ -7,11 +7,10 @@ import { verificaHeaders } from '../middlewares/validateHeadersMiddleware.js';
 
 const router = Router();
 
-router.use(verificaHeaders)
 
 
-router.post("/wallet", postWallet);
+router.post("/wallet", verificaHeaders, postWallet);
 
-router.get("/wallet", getWallet);
+router.get("/wallet", verificaHeaders, getWallet);
 
 export default router;
